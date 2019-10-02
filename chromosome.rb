@@ -10,18 +10,19 @@ class Chromosome
     decoded = []
     @genes.each do |gene|
       decoded << gene.get_value
-   end
-   decoded
-
+    end
+    puts "decoded"
+    puts decoded
+    return filter(decoded)
   end
 
-  def fitness(target)
+  def fitness target
   end
 
   def bits
   end
 
-  def mutate(position)
+  def mutate position
   end
 
   private
@@ -34,5 +35,32 @@ class Chromosome
       x -= 1
     end
     genes
+  end
+
+  def filter decoded
+    filtered_array = []
+    state = "number"
+    decoded.each do |item|
+      puts item
+      if state == "number"
+        if item.is_a? Integer
+          puts "number"
+          filtered_array << item
+          puts filtered_array
+          state = "operator"
+        end
+      else
+        if item.is_a? String
+          puts "operator"
+          filtered_array << item
+          puts filtered_array
+          state = "number"
+        end
+      end
+    end
+    if filtered_array[filtered_array.length - 1].is_a? String
+      filtered_array.pop
+    end
+    return filtered_array
   end
 end
