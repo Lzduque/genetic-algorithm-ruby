@@ -11,9 +11,11 @@ class Chromosome
     @genes.each do |gene|
       decoded << gene.get_value
     end
-    puts "decoded"
-    puts decoded
-    return filter(decoded)
+    # puts "decoded"
+    # puts decoded
+    decoded_array = filter(decoded)
+    p decoded_array
+    # return math(decoded_array)
   end
 
   def fitness target
@@ -41,19 +43,19 @@ class Chromosome
     filtered_array = []
     state = "number"
     decoded.each do |item|
-      puts item
+      # puts item
       if state == "number"
         if item.is_a? Integer
-          puts "number"
+          # puts "number"
           filtered_array << item
-          puts filtered_array
+          # puts filtered_array
           state = "operator"
         end
       else
         if item.is_a? String
-          puts "operator"
+          # puts "operator"
           filtered_array << item
-          puts filtered_array
+          # puts filtered_array
           state = "number"
         end
       end
@@ -62,5 +64,14 @@ class Chromosome
       filtered_array.pop
     end
     return filtered_array
+  end
+
+  def math array
+    result = 0
+    current_array = array
+    array.each_with_index do |item, i|
+      array[i].send(array[i + 1].to_sym, array[i + 2])
+      current_array.slice(i + 3)
+    end
   end
 end

@@ -1,3 +1,6 @@
+require './gene'
+require './chromose'
+
 class Population
   def initialize target, chromosomes
     @target = target
