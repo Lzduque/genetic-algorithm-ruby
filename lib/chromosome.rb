@@ -13,9 +13,9 @@ class Chromosome
     end
     # puts "decoded"
     # puts decoded
-    decoded_array = self.filter(decoded)
+    decoded_array = self.class.filter(decoded)
     p decoded_array
-    return self.math(decoded_array)
+    return self.class.math(decoded_array)
   end
 
   def fitness target
@@ -55,7 +55,7 @@ class Chromosome
   end
 
   def self.math array
-    result = array === [] ? 0 : array[0]
+    result = array === [] ? 0.0 : array[0].to_f
     (1..array.length - 2).step(2) do |i|
       result = result.send(array[i].to_sym, array[i + 1])
     end
