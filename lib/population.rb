@@ -1,5 +1,5 @@
-require './gene'
-require './chromose'
+require 'gene'
+require 'chromose'
 
 class Population
   def initialize target, chromosomes

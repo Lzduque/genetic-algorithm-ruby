@@ -1,4 +1,4 @@
-require './gene'
+require 'gene'
 
 class Chromosome
   def initialize length
@@ -13,9 +13,9 @@ class Chromosome
     end
     # puts "decoded"
     # puts decoded
-    decoded_array = filter(decoded)
+    decoded_array = self.filter(decoded)
     p decoded_array
-    # return math(decoded_array)
+    # return self.math(decoded_array)
   end
 
   def fitness target
@@ -27,19 +27,7 @@ class Chromosome
   def mutate position
   end
 
-  private
-  def get_genes length
-    x = length
-    genes = []
-    while x > 0 do
-      gene = Gene.new
-      genes << gene
-      x -= 1
-    end
-    genes
-  end
-
-  def filter decoded
+  def self.filter decoded
     filtered_array = []
     state = "number"
     decoded.each do |item|
@@ -66,7 +54,19 @@ class Chromosome
     return filtered_array
   end
 
-  def math array
+  private
+  def get_genes length
+    x = length
+    genes = []
+    while x > 0 do
+      gene = Gene.new
+      genes << gene
+      x -= 1
+    end
+    genes
+  end
+
+  def self.math array
     result = 0
     current_array = array
     array.each_with_index do |item, i|
