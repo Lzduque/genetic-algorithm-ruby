@@ -15,7 +15,7 @@ class Chromosome
     # puts decoded
     decoded_array = self.filter(decoded)
     p decoded_array
-    # return self.math(decoded_array)
+    return self.math(decoded_array)
   end
 
   def fitness target
@@ -54,6 +54,14 @@ class Chromosome
     return filtered_array
   end
 
+  def self.math array
+    result = array === [] ? 0 : array[0]
+    (1..array.length - 2).step(2) do |i|
+      result = result.send(array[i].to_sym, array[i + 1])
+    end
+    result
+  end
+
   private
   def get_genes length
     x = length
@@ -64,14 +72,5 @@ class Chromosome
       x -= 1
     end
     genes
-  end
-
-  def self.math array
-    result = 0
-    current_array = array
-    array.each_with_index do |item, i|
-      array[i].send(array[i + 1].to_sym, array[i + 2])
-      current_array.slice(i + 3)
-    end
   end
 end
