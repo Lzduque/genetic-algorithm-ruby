@@ -1,6 +1,8 @@
 require 'gene'
 
 class Chromosome
+  attr_accessor :genes
+
   def initialize length
     @length = length
     @genes = get_genes length
@@ -11,39 +13,59 @@ class Chromosome
     @genes.each do |gene|
       decoded << gene.get_value
     end
-    # puts "decoded"
-    # puts decoded
     decoded_array = self.class.filter(decoded)
-    p decoded_array
-    return self.class.math(decoded_array)
+  end
+
+  def value
+    decoded_array = self.decode
+    self.class.math(decoded_array)
   end
 
   def fitness target
+    # (target - self.decode) === 0 ? 1 : 1/((target - self.decode).abs() * 100)
+    1 / ((target - self.value).abs() / target)
   end
 
   def bits
+    bits = []
+    @genes.each do |gene|
+      bits << gene.bits
+    end
+    bits.join("").split("")
   end
 
   def mutate position
+    new_bits = []
+    bits = @genes.bits
+    bits.each do |bit|
+      chance = rand(1001)
+      if chance <= 1
+        if bit == "1"
+          new_bits << "0"
+        else
+          new_bits << "1"
+        end
+      else
+        new_bits << bit
+      end
+    end
+    new_genes = []
+
+    @genes = new_genes
   end
 
   def self.filter decoded
     filtered_array = []
     state = "number"
     decoded.each do |item|
-      # puts item
       if state == "number"
         if item.is_a? Integer
-          # puts "number"
           filtered_array << item
-          # puts filtered_array
           state = "operator"
         end
       else
         if item.is_a? String
-          # puts "operator"
           filtered_array << item
-          # puts filtered_array
           state = "number"
         end
       end
