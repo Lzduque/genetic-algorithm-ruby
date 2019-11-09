@@ -2,6 +2,7 @@ require 'gene'
 
 class Chromosome
   attr_accessor :genes
+  attr_accessor :length
 
   def initialize length
     @length = length
@@ -34,10 +35,12 @@ class Chromosome
     bits.join("").split("")
   end
 
-  def mutate position
+  # Mutates each bit in every gene of the chromosome in-place (based on random chance)
+  def mutate
+    array_genes = []
+    @genes.map { |gene| gene.bits.split("").map { |bit| array_genes << bit.to_s } }
     new_bits = []
-    bits = @genes.bits
-    bits.each do |bit|
+    array_genes.each do |bit|
       chance = rand(1001)
       if chance <= 1
         if bit == "1"
@@ -49,7 +52,8 @@ class Chromosome
         new_bits << bit
       end
     end
-    new_genes = []
+
+    new_genes = new_bits.join("").scan(/..../).map{ |gene| Gene.new(gene) }
 
     @genes = new_genes
   end
