@@ -1,8 +1,8 @@
 class Gene
   attr_reader :bits
 
-  def initialize
-    @bits = create()
+  def initialize(bits = nil)
+    @bits = create(bits)
   end
 
   def get_value
@@ -38,7 +38,11 @@ class Gene
   # end
 
   private
-  def create
-    gene = "#{rand(2)}#{rand(2)}#{rand(2)}#{rand(2)}"
+  def create bits
+    if bits == nil
+      @bits = "#{rand(2)}#{rand(2)}#{rand(2)}#{rand(2)}"
+    else
+      @bits = bits
+    end
   end
 end
