@@ -13,7 +13,8 @@ class Population
   def select_chromosomes
   end
 
-  def crossover
+  def crossover chromosome1, chromosome2
+    chromosome1.crossover(chromosome2)
   end
 
   def add_chromosome chromosome

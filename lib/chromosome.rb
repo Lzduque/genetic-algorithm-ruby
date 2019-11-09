@@ -58,6 +58,26 @@ class Chromosome
     @genes = new_genes
   end
 
+  # Given another chromosome, apply the crossover between this chromosome and the other. Modify this chromosome and the other in-place.
+  # Crossover is performed by selecting a random gene along the length of the chromosomes and swapping all the genes after that point.
+  def crossover chromosome
+    gene_index = rand(@genes.length)
+    new_genes1 = []
+    new_genes2 = []
+    @genes.each_with_index do |gene, index|
+      if index >= gene_index
+        new_genes1 << chromosome.genes[index]
+        new_genes2 << @genes[index]
+      else
+        new_genes1 << @genes[index]
+        new_genes2 << chromosome.genes[index]
+      end
+    end
+
+    @genes = new_genes1
+    chromosome.genes = new_genes2
+  end
+
   def self.filter decoded
     filtered_array = []
     state = "number"
