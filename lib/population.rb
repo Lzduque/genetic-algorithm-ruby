@@ -31,13 +31,14 @@ class Population
           crossover(chromosome1, chromosome2)
           chromosome1.mutate
           chromosome2.mutate
-          new_population << chromosome1
-          new_population << chromosome2
+          new_population << chromosome1.dup
+          new_population << chromosome2.dup
         end
         @chromosomes = new_population
         number_of_generations += 1
         p "Generation #{number_of_generations}"
         @chromosomes.sort_by!{ |chromosome| chromosome.fitness }
+        p "Current best equation: #{@chromosomes.last.decode.join(" ")}"
         p "Current best value: #{@chromosomes.last.value}"
         p "Current best fitness: #{@chromosomes.last.fitness}"
       end
@@ -64,12 +65,9 @@ class Population
 
   def pick_chromosome
     pick_you = rand(0.0...@total_fitness)
-    p "Total fitness: #{@total_fitness}"
-    p "Pick_you: #{pick_you}"
     acc = 0
     @chromosomes.each do |chromosome|
       acc += chromosome.fitness
-      p "acc: #{acc}"
       if pick_you.nil?
         pick_you = 0.0
       end
