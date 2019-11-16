@@ -16,6 +16,33 @@ class Population
     p "winner final value is: #{winner.value}"
   end
 
+  def run
+    number_of_generations = 0
+    while number_of_generations < @max_generations do
+      winner = self.check_for_winner
+      new_population = []
+      if winner
+        return winner
+      else
+        generate_roulette_wheel
+        while new_population.length < @size do
+          chromosome1 = pick_chromosome
+          chromosome2 = pick_chromosome
+          crossover(chromosome1, chromosome2)
+          chromosome1.mutate
+          chromosome2.mutate
+          new_population << chromosome1
+          new_population << chromosome2
+        end
+        @chromosomes = new_population
+        number_of_generations += 1
+        p "Generation #{number_of_generations}"
+        @chromosomes.sort_by!{ |chromosome| chromosome.fitness }
+        p "Current best value: #{@chromosomes.last.value}"
+        p "Current best fitness: #{@chromosomes.last.fitness}"
+      end
+    end
+    return @chromosomes.sort_by{ |chromosome| chromosome.fitness }.last
   end
 
   def check_for_winner
