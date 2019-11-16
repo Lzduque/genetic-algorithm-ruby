@@ -18,7 +18,16 @@ class Population
   def generate_roulette_wheel
   end
 
-  def select_chromosomes
+  def pick_chromosome
+    pick_you = rand(0.0...@total_fitness)
+    acc = 0
+    @chromosomes.each do |chromosome|
+      acc += chromosome.fitness
+      if pick_you <= acc
+        return chromosome
+      end
+    end
+    return @chromosomes.last
   end
 
   def crossover chromosome1, chromosome2
