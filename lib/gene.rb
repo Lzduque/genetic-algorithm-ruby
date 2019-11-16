@@ -24,19 +24,6 @@ class Gene
     value[@bits]
   end
 
-  # def opposite gene
-  #   gene_array = gene.split("")
-  #   opposite_array = []
-  #   gene_array.each do |bit|
-  #     if bit == "0"
-  #       opposite_array << "1"
-  #     else
-  #       opposite_array << "0"
-  #     end
-  #   end
-  #   opposite_array.join("")
-  # end
-
   private
   def create bits
     if bits == nil

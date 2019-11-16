@@ -25,7 +25,6 @@ class Chromosome
   end
 
   def get_fitness target
-    # (target - self.decode) === 0 ? 1 : 1/((target - self.decode).abs() * 100)
     @fitness = 1 / ((target - self.value).abs() / target)
   end
 
