@@ -3,10 +3,12 @@ require 'gene'
 class Chromosome
   attr_accessor :genes
   attr_accessor :length
+  attr_accessor :fitness
 
   def initialize length
     @length = length
     @genes = get_genes length
+    @fitness = nil
   end
 
   def decode
@@ -22,9 +24,9 @@ class Chromosome
     self.class.math(decoded_array)
   end
 
-  def fitness target
+  def get_fitness target
     # (target - self.decode) === 0 ? 1 : 1/((target - self.decode).abs() * 100)
-    1 / ((target - self.value).abs() / target)
+    @fitness = 1 / ((target - self.value).abs() / target)
   end
 
   def bits
@@ -105,7 +107,7 @@ class Chromosome
     (1..array.length - 2).step(2) do |i|
       result = result.send(array[i].to_sym, array[i + 1])
     end
-    result
+    return result.nan? ? 0.0 : result
   end
 
   private
