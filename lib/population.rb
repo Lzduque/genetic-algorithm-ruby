@@ -5,6 +5,14 @@ class Population
   def initialize target, chromosomes
     @target = target
     @chromosomes = [chromosomes]
+
+  def check_for_winner
+    @chromosomes.each do |chromosome|
+      if chromosome.get_fitness(@target) == (1/0.0)
+        return chromosome
+      end
+    end
+    return nil
   end
 
   def generate_roulette_wheel
