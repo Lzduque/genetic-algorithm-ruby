@@ -27,4 +27,16 @@ class Population
 
   def add_chromosome chromosome
   end
+
+private
+  def get_chromosomes
+    x = @size
+    chromosomes = []
+    while x > 0 do
+      chromosome = Chromosome.new(@chrome_length)
+      chromosomes << chromosome
+      x -= 1
+    end
+    chromosomes
+  end
 end
