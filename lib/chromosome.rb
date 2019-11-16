@@ -5,10 +5,11 @@ class Chromosome
   attr_accessor :length
   attr_accessor :fitness
 
-  def initialize length
+  def initialize length, target
     @length = length
     @genes = get_genes length
-    @fitness = nil
+    @target = target
+    get_fitness
   end
 
   def decode
@@ -22,10 +23,6 @@ class Chromosome
   def value
     decoded_array = self.decode
     self.class.math(decoded_array)
-  end
-
-  def get_fitness target
-    @fitness = 1 / ((target - self.value).abs() / target)
   end
 
   def bits
@@ -57,6 +54,7 @@ class Chromosome
     new_genes = new_bits.join("").scan(/..../).map{ |gene| Gene.new(gene) }
 
     @genes = new_genes
+    get_fitness
   end
 
   # Given another chromosome, apply the crossover between this chromosome and the other. Modify this chromosome and the other in-place.
@@ -77,6 +75,8 @@ class Chromosome
 
     @genes = new_genes1
     chromosome.genes = new_genes2
+    get_fitness
+    chromosome.get_fitness
   end
 
   def self.filter decoded
@@ -107,6 +107,10 @@ class Chromosome
       result = result.send(array[i].to_sym, array[i + 1])
     end
     return result.nan? ? 0.0 : result
+  end
+
+  def get_fitness
+    @fitness = 1 / ((@target - self.value).abs() / @target)
   end
 
   private
