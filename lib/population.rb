@@ -1,10 +1,15 @@
 require 'gene'
-require 'chromose'
+require 'chromosome'
 
 class Population
-  def initialize target, chromosomes
+  attr_accessor :target, :size, :chrome_length, :chromosomes, :total_fitness
+  def initialize target, size, chrome_length
     @target = target
-    @chromosomes = [chromosomes]
+    @size = size
+    @chrome_length = chrome_length
+    @chromosomes = get_chromosomes
+    @total_fitness = 0
+  end
 
   def check_for_winner
     @chromosomes.each do |chromosome|
