@@ -16,6 +16,11 @@ class Population
   end
 
   def generate_roulette_wheel
+    @total_fitness = 0
+    @chromosomes.each do |chromosome|
+      @total_fitness += chromosome.get_fitness(@target)
+    end
+    @chromosomes
   end
 
   def pick_chromosome
